@@ -55,7 +55,7 @@ class DualSoftMaxMatcher(nn.Module):
         batch_inds = inds[:,0]
         matches_A = keypoints_A[batch_inds, inds[:,1]]
         matches_B = keypoints_B[batch_inds, inds[:,2]]
-        return matches_A, matches_B, inds
+        return matches_A, matches_B, batch_inds, inds
 
     def log_softmax(self, descriptions_A, descriptions_B):
         return dual_log_softmax_matcher(
@@ -71,7 +71,6 @@ class DualSoftMaxMatcher(nn.Module):
     
     def to_normalized_coords(self, x_A, x_B, H_A, W_A, H_B, W_B):
         return to_normalized_coords(x_A, H_A, W_A), to_normalized_coords(x_B, H_B, W_B)
-
 
 class PostHocAffineDualSoftMaxMatcher(nn.Module):
     def __init__(
